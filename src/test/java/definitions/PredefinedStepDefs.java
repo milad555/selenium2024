@@ -1,6 +1,7 @@
 // Created by Viacheslav (Slava) Skryabin 04/01/2011
 package definitions;
 
+import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
@@ -8,19 +9,34 @@ import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.*;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
+
 import java.io.File;
 import java.time.Duration;
 import java.util.Date;
 import java.util.Iterator;
+import java.util.Random;
+
 import static org.assertj.core.api.Assertions.*;
 import static support.DriverFactory.getDriver;
 
 public class PredefinedStepDefs {
+
+    public String rt() {
+        String characters = "abcdefghijklmnopqrstuvwxyz";
+        Random random = new Random();
+        StringBuilder randomText = new StringBuilder(5);
+        for (int i = 0; i <= 5; i++) {
+            randomText.append(characters.charAt(random.nextInt(characters.length())));
+        }return randomText.toString();
+    }
+
     @Given("I open url {string}")
     public void iOpenUrl(String url) {
         getDriver().get(url);
     }
+
     @Then("I resize window to {int} and {int}")
     public void iResizeWindowToAnd(int width, int height) {
         Dimension dimension = new Dimension(width, height);
@@ -36,7 +52,7 @@ public class PredefinedStepDefs {
     public void iMaximizeWindow() {
         java.awt.Dimension screenSize = java.awt.Toolkit.getDefaultToolkit().getScreenSize();
         Dimension maxWindowSize = new Dimension((int) screenSize.getWidth(), (int) screenSize.getHeight());
-        getDriver().manage().window().setPosition(new Point(0,0));
+        getDriver().manage().window().setPosition(new Point(0, 0));
         getDriver().manage().window().setSize(maxWindowSize);
     }
 
@@ -162,7 +178,7 @@ public class PredefinedStepDefs {
     public void iSwitchToNewWindow() {
         Iterator<String> iterator = getDriver().getWindowHandles().iterator();
         String newWindow = iterator.next();
-        while(iterator.hasNext()) {
+        while (iterator.hasNext()) {
             newWindow = iterator.next();
         }
         getDriver().switchTo().window(newWindow);
@@ -220,5 +236,22 @@ public class PredefinedStepDefs {
     @When("I mouse over element with xpath {string}")
     public void iMouseOverElementWithXpath(String xpath) {
         new Actions(getDriver()).moveToElement(getDriver().findElement(By.xpath(xpath))).perform();
+    }
+
+    @And("I select from dropdown {string} by value {string}")
+    public void iSelectFromDropdownByValue(String dropdownName, String dropdownValue) {
+        new Select(getDriver().findElement(By.name(dropdownName))).selectByVisibleText(dropdownValue);
+    }
+
+
+    @And("I type random text plus {string} into element with xpath {string}")
+    public void iTypeRandomTextPlusIntoElementWithXpath(String email, String xpath) {
+        getDriver().findElement(By.xpath(xpath)).sendKeys(rt() + email);
+        }
+
+
+    @Then("I verify the element with xpath {string} is present")
+    public void iVerifyTheElementWithXpathIsPresent(String xpath) {
+        assertThat(getDriver().findElement(By.xpath(xpath)).isDisplayed()).isTrue();
     }
 }
