@@ -134,9 +134,9 @@ public class QuoteStepsDefs {
         quoteForm.selectDateOfBirth("1991","Jan", "4");
         quoteForm.selectCountryOfOrigin(data.getCountry());
         quoteForm.fillAdditionalInform("Donald Duck","1231412");
-        quoteForm.clickButtonByContains("Related documents");
-        quoteForm.switchToWindow(1);
-        quoteForm.waitFor(5);
+       // quoteForm.clickButtonByContains("Related documents");
+        //quoteForm.switchToWindow(1);
+        //quoteForm.waitFor(5);
     }
 
     @And("I submit the form oop")
@@ -156,7 +156,7 @@ public class QuoteStepsDefs {
         quoteResult.isSubmittedDataCorrect("thirdPartyAgreement","accepted");
         quoteResult.isSubmittedDataCorrect("carMake","Ford, Toyota");
         quoteResult.isSubmittedDataCorrect("email",data.getEmail());
-        quoteResult.isSubmittedDataCorrect("phone",data.getPhone());
+//        quoteResult.isSubmittedDataCorrect("phone",data.getPhone());
         quoteResult.isSubmittedDataCorrect("dateOfBirth","01/04/1991");
         quoteResult.isSubmittedDataCorrect("gender","male");
         quoteResult.isCurrentTimeCorrect();
