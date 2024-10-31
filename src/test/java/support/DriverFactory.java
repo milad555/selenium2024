@@ -44,7 +44,9 @@ public class DriverFactory {
                         chromePreferences.put("download.default_directory", System.getProperty("user.dir") + "/src/test/resources/downloads");
                         chromePreferences.put("safebrowsing.enabled", false);
                         chromePreferences.put("plugins.always_open_pdf_externally", true);
-                        chromePreferences.put("plugins.plugins_disabled", new ArrayList<String>(){{ add("Chrome PDF Viewer"); }});
+                        chromePreferences.put("plugins.plugins_disabled", new ArrayList<String>() {{
+                            add("Chrome PDF Viewer");
+                        }});
                         chromePreferences.put("credentials_enable_service", false);
                         chromePreferences.put("password_manager_enabled", false);
                         // for EMEA only - disable cookies
@@ -86,7 +88,7 @@ public class DriverFactory {
                     default:
                         throw new RuntimeException("Driver is not implemented for: " + testConfig.getBrowser());
                 }
-            } else if (testConfig.getTestExecutionMode().equals("grid")){
+            } else if (testConfig.getTestExecutionMode().equals("grid")) {
                 DesiredCapabilities capabilities = new DesiredCapabilities();
                 capabilities.setBrowserName(testConfig.getBrowser());
                 capabilities.setPlatform(Platform.ANY);
@@ -97,6 +99,40 @@ public class DriverFactory {
                 } catch (MalformedURLException e) {
                     throw new RuntimeException(e.getMessage());
                 }
+            } else if (testConfig.getTestExecutionMode().equals("jenkins")) {
+                Map<String, Object> chromePreferences = new HashMap<>();
+                chromePreferences.put("profile.default_content_settings.geolocation", 2);
+                chromePreferences.put("profile.default_content_settings.popups", 0);
+                chromePreferences.put("download.prompt_for_download", false);
+                chromePreferences.put("download.directory_upgrade", true);
+                chromePreferences.put("download.default_directory", System.getProperty("user.dir") + "/src/test/resources/downloads");
+                chromePreferences.put("safebrowsing.enabled", false);
+                chromePreferences.put("plugins.always_open_pdf_externally", true);
+
+                chromePreferences.put("plugins.plugins_disabled", new ArrayList<String>() {{
+                    add("Chrome PDF Viewer");
+                }});
+                chromePreferences.put("credentials_enable_service", false);
+                chromePreferences.put("password_manager_enabled", false);
+                // for EMEA only - disable cookies
+//                    chromePreferences.put("profile.default_content_setting_values.cookies", 2);
+                ChromeOptions chromeOptions = new ChromeOptions();
+                chromeOptions.addArguments("--start-maximized");
+                chromeOptions.addArguments("--remote-allow-origins=*");
+                chromeOptions.setExperimentalOption("prefs", chromePreferences);
+                System.setProperty(ChromeDriverService.CHROME_DRIVER_SILENT_OUTPUT_PROPERTY, "true");
+                System.setProperty(ChromeDriverService.CHROME_DRIVER_LOG_LEVEL_PROPERTY, "SEVERE");
+                chromeOptions.setBinary("/usr/bin/chromium");
+                chromeOptions.addArguments("--headless");
+                chromeOptions.addArguments("--window-size=" + size.getWidth() + "," + size.getWidth());
+                chromeOptions.addArguments("--disable-gpu");
+                chromeOptions.addArguments("--no-sandbox"); // Bypass OS security model
+                chromeOptions.addArguments("--disable-dev-shm-usage");
+                ChromeDriverService service = new ChromeDriverService.Builder()
+                        .withLogOutput(System.out)
+                        .build();
+                driverThreadLocal.set(new ChromeDriver(service, chromeOptions));
+
             } else {
                 throw new RuntimeException("Unsupported test environment: " + testConfig.getTestExecutionMode());
             }
