@@ -7,9 +7,6 @@ import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.Select;
 import support.DriverFactory;
 
-import java.util.List;
-import java.util.Set;
-
 public class Page {
 
     WebDriver driver;
@@ -31,11 +28,9 @@ public class Page {
     public WebElement getByXpath(String xpath) {
         return driver.findElement(By.xpath(xpath));
     }
-
     public void clickButton(String button) {
         getByXpath("//button[text()='" + button + "']").click();
     }
-
     public void clickButtonByContains(String button) {
         getByXpath("//button[contains(text(),'" + button + "')]").click();
     }

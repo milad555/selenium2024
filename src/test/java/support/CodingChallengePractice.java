@@ -2,6 +2,7 @@ package support;
 
 public class CodingChallengePractice {
 
+
     public static void main(String[] args) {
         swapNums(3, 5);
     }

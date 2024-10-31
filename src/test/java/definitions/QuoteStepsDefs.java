@@ -5,17 +5,15 @@ import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import org.openqa.selenium.By;
-import org.openqa.selenium.Cookie;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.FindBy;
-import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import pages.Page;
 import pages.QuoteForm;
 import pages.QuoteResult;
+import pages.UserData;
 import support.DriverFactory;
 
 import java.time.Duration;
@@ -23,7 +21,15 @@ import java.time.Duration;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class QuoteStepsDefs {
-
+    UserData data = new UserData(
+            "Miladski",
+            "Milad",
+            "X",
+            "K",
+            "Mila123",
+            "Mila123",
+            "test@test.com","Russia"
+    );
 
     Page page = new Page();
     WebDriver driver = DriverFactory.getDriver();
@@ -50,7 +56,7 @@ public class QuoteStepsDefs {
             case "quote" -> page.open("https://skryabin.com/market/quote.html");
             case "login" -> page.open("https://skryabin.com/market/login.html");
             case "careers" -> page.open("https://skryabin-careers.herokuapp.com/");
-            case "careers log" -> page.open("https://skryabin-careers.herokuapp.com/login");
+            case "careers login" -> page.open("https://skryabin-careers.herokuapp.com/login");
             default -> throw new IllegalStateException("Unexpected value: " + page);
         }
     }
@@ -114,17 +120,19 @@ public class QuoteStepsDefs {
 
     @When("I fill out the required fields on the form oop")
     public void iFillOutTheRequiredFieldsOnTheFormOop() throws InterruptedException {
-        quoteForm.fillName("Milad", "X", "K");
-        quoteForm.fillUsername("Miladski");
-        quoteForm.fillPassword("Mila123");
-        quoteForm.fillEmail("miladski@test.com");
-        quoteForm.fillphone("123312123");
+
+
+        quoteForm.fillName(data.getFirstName(), data.getMiddleName(), data.getLastName());
+        quoteForm.fillUsername(data.getUsername());
+        quoteForm.fillPassword(data.getPassword());
+        quoteForm.fillEmail(data.getEmail());
+        quoteForm.fillphone(data.getPhone());
         quoteForm.checkPrivacyPolicy();
         quoteForm.selectTwoCarMakers("Ford","Toyota");
         quoteForm.acceptAgreement();
         quoteForm.checkGender("male").click();
         quoteForm.selectDateOfBirth("1991","Jan", "4");
-        quoteForm.selectCountryOfOrigin("Russia");
+        quoteForm.selectCountryOfOrigin(data.getCountry());
         quoteForm.fillAdditionalInform("Donald Duck","1231412");
         quoteForm.clickButtonByContains("Related documents");
         quoteForm.switchToWindow(1);
@@ -138,17 +146,17 @@ public class QuoteStepsDefs {
 
     @Then("I see required fields submitted successfully oop")
     public void iSeeRequiredFieldsSubmittedSuccessfullyOop() {
-        quoteResult.isSubmittedDataCorrect("firstName","Milad");
-        quoteResult.isSubmittedDataCorrect("middleName","X");
-        quoteResult.isSubmittedDataCorrect("lastName","K");
+        quoteResult.isSubmittedDataCorrect("firstName", data.getFirstName());
+        quoteResult.isSubmittedDataCorrect("middleName",data.getMiddleName());
+        quoteResult.isSubmittedDataCorrect("lastName",data.getLastName());
         quoteResult.isSubmittedDataCorrect("password","[entered]");
-        quoteResult.isSubmittedDataCorrect("username","Miladski");
+        quoteResult.isSubmittedDataCorrect("username",data.getUsername());
         quoteResult.isSubmittedDataCorrect("agreedToPrivacyPolicy","true");
-        quoteResult.isSubmittedDataCorrect("countryOfOrigin","Russia");
+        quoteResult.isSubmittedDataCorrect("countryOfOrigin", data.getCountry());
         quoteResult.isSubmittedDataCorrect("thirdPartyAgreement","accepted");
         quoteResult.isSubmittedDataCorrect("carMake","Ford, Toyota");
-        quoteResult.isSubmittedDataCorrect("email","miladski@test.com");
-        quoteResult.isSubmittedDataCorrect("phone","123312123");
+        quoteResult.isSubmittedDataCorrect("email",data.getEmail());
+        quoteResult.isSubmittedDataCorrect("phone",data.getPhone());
         quoteResult.isSubmittedDataCorrect("dateOfBirth","01/04/1991");
         quoteResult.isSubmittedDataCorrect("gender","male");
         quoteResult.isCurrentTimeCorrect();
