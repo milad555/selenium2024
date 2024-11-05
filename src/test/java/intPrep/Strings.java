@@ -139,27 +139,58 @@ startHi("hello hi") → false
 
 
     public String front3(String str) {
-        if (str.length()>3){
+        if (str.length() > 3) {
             return str;
         }
         String front = str.substring(0, 3);
         return front + front + front;
     }
 
+    public String endUp(String str) {
+        if (str.length() < 3) {
+            return str.toUpperCase();
+        } else {
+            return str.substring(str.length() - 3, str.length()).toUpperCase();
+        }
+    }
+
+    public static String everyNth(String str, int n) {
+        String newStr = "";
+
+        for (int i = 0; i < str.length(); i = i + n) {
+            newStr = newStr + str.charAt(i);
+        }
+        return newStr;
+    }
+
+
+    public static String delDel(String str) {
+        if (str.substring(1, 4).equals("del")){
+            return str.substring(0,1) + str.substring(4);
+        }else{
+            return str;
+        }
+
+    }
+
     public static void main(String[] args) {
-        String middleThree = "candy";
-        // System.out.println(middleThree(middleThree));
-        StringBuilder sb = new StringBuilder(middleThree);
 
-        String newsstr = sb.delete(0, middleThree.length() - 1).toString();
+        System.out.println(delDel("adelHello"));
 
-
-        // System.out.println(newsstr);
-
-
-        String s = "abcdef";
-        System.out.println(reverseString(s));
-        String m = "abXYZba";
+//        String middleThree = "candy";
+        String abcd = "abcdefgh";
+//        // System.out.println(middleThree(middleThree));
+//        StringBuilder sb = new StringBuilder(middleThree);
+//
+//        String newsstr = sb.delete(0, middleThree.length() - 1).toString();
+//
+//        System.out.println(everyNth(abcd, 3));
+//        // System.out.println(newsstr);
+//
+//
+//        String s = "abcdef";
+//        System.out.println(reverseString(s));
+//        String m = "abXYZba";
         // System.out.println(mirrorEnds(m));
         // System.out.println(backAround(s));
         //System.out.println(missingChar(middleThree,3));

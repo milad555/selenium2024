@@ -118,14 +118,29 @@ Example:
 
     // reverse words in sentence
     public static void reverseWords(String str) {
-        String reversed = "";
-        String divide = " ";
-        List<String> strArr = new ArrayList<>();
+        String[] words = str.trim().split(" ");
 
-//        for (int i = 0; i < str.length() ; i++) {
-//            str.s
-//        }
+        StringBuilder build = new StringBuilder();
+        for (int i = words.length - 1; i >= 0; i--) {
+            build.append(words[i] + " ");
+        }
+        System.out.println(build);
+    }
 
+
+    public static void reverseLettersInWords(String str) {
+        String[] words = str.trim().split(" ");
+        StringBuilder build = new StringBuilder();
+        String revWord = "";
+        for (int i = 0; i < words.length; i++) {
+            String word = words[i];
+            for (int j = word.length() - 1; j >= 0; j--) {
+                revWord += word.charAt(j);
+            }
+
+            revWord = revWord + " ";
+        }
+        System.out.println(revWord);
     }
 
     public static void main(String[] args) {
@@ -135,18 +150,19 @@ Example:
         String a = "this is just a test";
         // countVowels(a);
 //        reverseString(a);
+        // reverseWords(a);
+
+        reverseLettersInWords(a);
 
 
-
-
-        int[] arr = {1, 2, 3, 7, 2, 7, 5};
-        HashMap<Integer,Integer> map = new HashMap<>();
-
-        for (int i = 0; i < arr.length; i++) {
-            map.put(arr[i], map.getOrDefault(arr[i],0) +1);
-        }
-        List<Integer> mapValues = map.entrySet().stream().filter(entry -> entry.getValue() == 2).map(Map.Entry::getKey).toList();
-        System.out.println(mapValues);
+//        int[] arr = {1, 2, 3, 7, 2, 7, 5};
+//        HashMap<Integer,Integer> map = new HashMap<>();
+//
+//        for (int i = 0; i < arr.length; i++) {
+//            map.put(arr[i], map.getOrDefault(arr[i],0) +1);
+//        }
+//        List<Integer> mapValues = map.entrySet().stream().filter(entry -> entry.getValue() == 2).map(Map.Entry::getKey).toList();
+//        System.out.println(mapValues);
 
 
 //

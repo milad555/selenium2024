@@ -1,4 +1,4 @@
-testExecutionMode: jenkins
+testExecutionMode: local
 browser: chrome
 headless: true
 windowWidth: 1920

@@ -1,11 +1,6 @@
 package intPrep;
 
-import javax.xml.transform.Source;
-import java.sql.SQLOutput;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.List;
+
 
 public class Ints {
 
@@ -55,6 +50,12 @@ Example:
     public static void sortArray(int[] arr){
         if (arr.length==0){
         }
+    }
+
+    public boolean lastDigit(int a, int b) {
+        int remA = a%10;
+        int remB = b%10;
+        return remB == remA;
     }
 
 

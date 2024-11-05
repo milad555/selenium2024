@@ -3,7 +3,7 @@ Feature: Careers Portal
 
   @careers1
   Scenario: Login to Careers Portal
-    Given I navigate to "careers log" page
+    Given I navigate to "careers login" page
     Then I verify the page title is "Careers Portal"
     When I fill out username "student@example.com" and password "welcome"
     And I click "Submit" button

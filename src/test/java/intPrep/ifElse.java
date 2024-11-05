@@ -85,8 +85,62 @@ Example:
        return (aTeen && !bTeen) || (!aTeen && bTeen);
     }
 
+    public boolean mixStart(String str) {
+        if(str.substring(1,3).equals("ix") ){
+            return  true;
+        }
+        return false;
+    }
+
+    public String startOz(String str) {
+        String result = "";
+
+        if (str.length() >= 1 && str.charAt(0)=='o') {
+            result = result + str.charAt(0);
+        }
+
+        if (str.length() >= 2 && str.charAt(1)=='z') {
+            result = result + str.charAt(1);
+        }
+
+        return result;
+    }
+
+    public static int close10(int a, int b) {
+        int difA = Math.abs(10 - a);
+        int difB = Math.abs(10 - b);
+
+        if (difA<difB){
+            return a;
+        }
+        if (difA>difB){
+            return b;
+        }
+        return 0;
+    }
+
+    public static int max1020(int a, int b) {
+
+        if (b>a){
+            int temp = a;
+            a=b;
+            b = temp;
+        }
+        if (a>=10 && a<=20) return a;
+        if (b>=10 && b<=20) return b;
+        return 0;
+    }
+
+
+
+
 
     public static void main(String[] args) {
-        isLeap(1900);
+      //  isLeap(1900);
+//        close10(13, 7);
+
+       // max1020(11,9);
     }
+
+
 }
