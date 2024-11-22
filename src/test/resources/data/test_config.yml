@@ -1,5 +1,5 @@
-testExecutionMode: jenkins
-browser: chromium
+testExecutionMode: local
+browser: chrome
 headless: true
 windowWidth: 1920
 windowHeight: 1080
