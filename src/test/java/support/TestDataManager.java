@@ -32,7 +32,7 @@ public class TestDataManager {
         return timestampThreadLocal.get();
     }
     public static String headlessProperty = System.getProperty("headless");
-    public static String testExecutionMode = System.getProperty("testExecution");
+    public static String testExecutionMode = System.getProperty("testExecutionMode");
 
     public static void updateTimestamp() {
         timestampThreadLocal.set(LocalDateTime.now().format(formatter));
