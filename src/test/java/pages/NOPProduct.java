@@ -20,13 +20,13 @@ public class NOPProduct extends Page{
 
     // Method to add product to cart
     public void addToCart() {
-        waitForElement(addToCartButton);
+        waitForVisible(addToCartButton);
         addToCartButton.click();
     }
 
     // Method to verify product details are visible
     public void verifyProductDetails() {
-       waitForElement(productDetails);
+       waitForVisible(productDetails);
     }
     public void selectRam(String ram){
         selectByVisibleText(attribute2, ram);

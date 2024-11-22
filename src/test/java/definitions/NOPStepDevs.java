@@ -1,5 +1,6 @@
 package definitions;
 
+import io.cucumber.datatable.DataTable;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
@@ -10,7 +11,9 @@ import org.openqa.selenium.WebElement;
 import pages.*;
 import support.DriverFactory;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
@@ -32,7 +35,7 @@ public class NOPStepDevs {
 
     @When("I click on the {string} category tab")
     public void iClickOnTheCategoryTab(String category) {
-      nopHome.clickCategory(category);
+        nopHome.clickCategory(category);
     }
 
     @When("I click on the {string} subcategory in the sidebar")
@@ -110,7 +113,7 @@ public class NOPStepDevs {
 
     @And("I click on Shopping cart tab")
     public void iClickOnShoppingCartTab() {
-        nopHome.clickShoppingCard();
+        nopHome.goToShoppingCart();
     }
 
     @Then("I proceed to the checkout page")
@@ -122,5 +125,35 @@ public class NOPStepDevs {
     @And("I select ram as {string} for desktop")
     public void iSelectRamForDesktop(String ram) {
         nopProduct.selectRam(ram);
+    }
+
+    @When("I click on the {string} link in the footer")
+    public void iClickOnTheLinkInTheFooter(String socialLink) {
+        nopHome.clickSocials(socialLink.toLowerCase());
+    }
+
+    @Then("I should be redirected to the {string} page")
+    public void iShouldBeRedirectedToThePage(String socialLink) {
+        nopHome.switchToWindow(1);
+    }
+
+    @When("I should return back to nopCommerce page")
+    public void iShouldReturnBackToPage() {
+        nopHome.switchToWindow(0);
+        nopHome.verifyTitle();
+    }
+
+    @When("I hover over {string} category")
+    public void iHoverOverCategory(String category) {
+        nopHome.hoverOver(nopHome.getByXpath("(//li/a[contains(text(),'" + category + "')])[1]"));
+    }
+
+    @Then("I should see subcategory:$")
+    public void iShouldSeeSubcategory(DataTable subs) {
+        List<String> subsList = subs.asList(String.class);
+        for (String subcategory : subsList) {
+            nopHome.verifySubCategory(subcategory);
+            System.out.println("Subcat is " + nopHome.getByXpath("(//li/a[normalize-space()='" + subcategory + "'])[1]").getText() + " is displayed");
+        }
     }
 }

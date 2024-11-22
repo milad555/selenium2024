@@ -87,20 +87,57 @@ Do not allocate extra space for another array. You must do this by modifying the
 
 
 // prime number
-        int finish = 30;
+       // int finish = 30;
         // System.out.println(prime(30));
-        // primeNumber(finish);
+     //   primeNumber(finish);
 
 //        String s = "VII";
 //        System.out.println(romanToInt(s));
-        String out = "<<>>";
-        String a = "candy";
-      //  System.out.println(middleThree(a));
+//        String out = "<<>>";
+//        String a = "candy";
+        //  System.out.println(middleThree(a));
 
-        System.out.println(makeOutWord(out,a));
+        // System.out.println(makeOutWord(out,a));
+//        String s = "A man, a plan, a canal: Panama";
+//        System.out.println( isPalindrome(s));
+
+        String s = "ace";
+        String t ="abcde";
     }
 
+    public boolean isSubsequence(String s, String t) {
 
+        int sPoint = 0;
+        int tPoint = 0;
+        while(sPoint < s.length() && tPoint <t.length()){
+            if (s.charAt(sPoint) == t.charAt(tPoint)){
+                sPoint++;
+            }
+            tPoint++;
+        }
+
+        return sPoint == s.length();
+
+    }
+
+    // valid palindrome
+    public static boolean isPalindrome(String s) {
+
+        s = s.replaceAll("[^a-zA-Z0-9]", "").toLowerCase();
+
+        if (s.length() == 0) {
+            return true;
+        }
+        int len = s.length() -1;
+
+        for (int i = 0; i <= s.length()/2; i++) {
+                if (s.charAt(i) != s.charAt(len)) {
+                   return false;
+                }
+            len--;
+            }
+        return true;
+    }
 
 
     public static int[] twoSum(int[] nums, int target) {
@@ -332,13 +369,15 @@ Do not allocate extra space for another array. You must do this by modifying the
     public static String middleThree(String str) {
         int m = str.length() / 2;
 
-       return str.substring(m-1,m+2);
+        return str.substring(m - 1, m + 2);
     }
 
     public static String makeOutWord(String out, String word) {
-    String begin = out.substring(0,2);
-    String end = out.substring(2,4);
-    return begin+word+end;
+        String begin = out.substring(0, 2);
+        String end = out.substring(2, 4);
+        return begin + word + end;
     }
+
+
 //candy
 }

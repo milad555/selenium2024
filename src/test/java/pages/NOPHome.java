@@ -9,42 +9,65 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.time.Duration;
-import java.util.HashMap;
 
 public class NOPHome extends Page {
+
     public NOPHome() {
-        url = "https://nop-qa.portnov.com";
+        url = "https://nop-qa.portnov.com/";
         title = "Your store. Home page title";
     }
-    @FindBy(xpath = "//span[@class='cart-label']")
-    private WebElement shoppingCard;
 
-    public void clickProduct(String partialLink) {
-        driver.findElement(By.xpath("(//a[contains(text(),'" + partialLink + "')])[1]")).click();
+    @FindBy(xpath = "//a[@class='ico-cart']")
+    private WebElement shoppingCart;
+
+    public void clickAndVerifySoppingCart(){
+        shoppingCart.click();
     }
 
     public void clickCategory(String category) {
-        if(category.equals("Computers")){
-            driver.findElement(By.xpath("//ul[@class='top-menu notmobile']//a[text()='Computers ']")).click();
-        } else if (category.equals("Electronics")) {
-            driver.findElement(By.xpath("//ul[@class='top-menu notmobile']//a[text()='Electronics ']")).click();
-        } else if (category.equals("Apparel")) {
-            driver.findElement(By.xpath("//ul[@class='top-menu notmobile']//a[text()='Apparel ']")).click();
-        } else if (category.equals("Digital downloads")) {
-            driver.findElement(By.xpath("//ul[@class='top-menu notmobile']//a[text()='Digital downloads ']")).click();
-        } else if (category.equals("Books")) {
-            driver.findElement(By.xpath("//ul[@class='top-menu notmobile']//a[text()='Books ']")).click();
-        } else if (category.equals("Jewelry")) {
-            driver.findElement(By.xpath("//ul[@class='top-menu notmobile']//a[text()='Jewelry ']")).click();
-        } else if (category.equals("Gift Cards")) {
-            driver.findElement(By.xpath("//ul[@class='top-menu notmobile']//a[text()='Gift Cards ']")).click();
+        getByXpath("//ul[@class='top-menu notmobile']//a[text()='" + category + " ']").click();
+    }
+
+    public void clickSubCategory(String subcategory) {
+        if (subcategory.equals("Desktops")) {
+            driver.findElement(By.xpath("//div[@class='block block-category-navigation']//a[@href='/desktops']")).click();
+        } else if (subcategory.equals("Notebooks")) {
+            driver.findElement(By.xpath("//div[@class='block block-category-navigation']//a[@href='/notebooks']")).click();
+        } else if (subcategory.equals("Software")) {
+            driver.findElement(By.xpath("//div[@class='block block-category-navigation']//a[@href='/software']")).click();
         } else {
-            throw new IllegalArgumentException("Invalid category: " + category);
+            throw new IllegalArgumentException("Invalid subcategory: " + subcategory);
         }
     }
 
-    public void clickShoppingCard(){
-        shoppingCard.click();
+    //Generic Method to click ANY Product
+    public void clickProduct(String text) {
+        //Storing into an element
+        WebElement element = driver.findElement(By.xpath("//*[text()='" + text + "']"));
+        //Creating an instance of Webdriver Wait
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        //Waiting Until the element is visible
+        wait.until(ExpectedConditions.visibilityOf(element));
+        //Clicking element
+        element.click();
+    }
+
+    public void goToShoppingCart() {
+        shoppingCart.click();
+    }
+
+    public void clickSocials(String social) {
+        driver.findElement(By.className(social)).click();
+    }
+
+    public void verifyTitle() {
+        assertThat(driver.getTitle()).contains(title);
+    }
+
+    public void verifySubCategory(String subcat) {
+        WebElement subs = getByXpath("(//li/a[normalize-space()='" + subcat + "'])[1]");
+        assertThat(subs.isDisplayed()).isTrue();
     }
 
 }
+

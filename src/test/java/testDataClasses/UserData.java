@@ -1,16 +1,17 @@
-package pages;
+package testDataClasses;
 
 public class UserData {
-    private String username;
+    private final String username;
 
-    private String firstName;
-    private String middleName;
-    private String lastName;
-    private String password;
+    private final String firstName;
+    private final String middleName;
+    private final String lastName;
+    private final String password;
     private String confirmPassword;
-    private String phone;
-    private String email;
-    private String country;
+    private final String phone;
+    private final String email;
+    private final String country;
+
 
 
     public UserData(String username, String firstName, String middleName, String lastName, String password, String phone, String email, String country) {

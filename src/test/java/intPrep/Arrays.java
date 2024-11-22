@@ -1,5 +1,7 @@
 package intPrep;
 
+import java.util.*;
+
 public class Arrays {
 
 
@@ -57,32 +59,68 @@ public class Arrays {
         return secondLarg;
     }
 
-// find the index of the value
+    // find the index of the value
     public static int findIndexOfValue(int[] arr, int value) {
         int index = 0;
         for (int i = 0; i < arr.length; i++) {
-            if (arr[i] == value){
+            if (arr[i] == value) {
                 index = i;
                 System.out.println("Index of the value is " + i);
                 break;
             }
 
-        }return index;
+        }
+        return index;
 
     }
 
+    public static String rotateLeft3(int[] nums) {
+        for (int i = 1; i <= 2; i++) {
+            int temp = nums[0];
+            nums[0] = nums[i];
+            nums[i] = nums[i + 1];
+            nums[nums.length - 1] = temp;
+
+        }
+        return java.util.Arrays.toString(nums);
+    }
+
+
+    // Given an array of ints length 3, return a new array
+    // with the elements in reverse order, so {1, 2, 3} becomes {3, 2, 1}.
+
+    public static int[] reverse3(int[] nums) {
+        int[] arr = new int[nums.length];
+        int j = nums.length - 1;
+        for (int i = 0; i <= nums.length - 1; i++) {
+            arr[i] = nums[j--];
+
+        }
+        return arr;
+    }
+
+    public static int middleArrayValue(int[] arr) {
+        int middle = arr.length / 2;
+        return middle;
+    }
+
+
 
     public static void main(String[] args) {
-        int[] numsfirstLast6 = {4, 6, 6, 3, 1, 2, 3, 2, 8,8};
+        int[] numsfirstLast6 = {4, 6, 6, 3, 1, 2, 3, 2, 8, 8};
         // System.out.println(firstLast6(numsfirstLast6));
+        int[] rotate = {1, 2, 3, 4, 5, 6, 7, 8, 9};
+        // System.out.println(rotateLeft3(rotate));
+        //System.out.println(middleArrayValue(rotate));
 
-        int[] commonEndA = {1, 2, 3};
-        int[] commonEndB = {7, 3};
+        //System.out.println(java.util.Arrays.toString(reverse3(rotate)));
+        // int[] commonEndA = {1, 2, 3};
+        //int[] commonEndB = {7, 3};
         //System.out.println(commonEnd(commonEndA, commonEndA));
         //System.out.println(sumOfAllElemInArray(numsfirstLast6));
 
         //System.out.println(secondLargestElement(numsfirstLast6));
-        findIndexOfValue(numsfirstLast6, 1);
+        //findIndexOfValue(numsfirstLast6, 1);
     }
 
 }

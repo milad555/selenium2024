@@ -15,6 +15,7 @@ public class TestConfig {
     private int explicitTimeout;
     private List<String> supportedOS;
 
+
     public String getBrowser() {
         return browser;
     }

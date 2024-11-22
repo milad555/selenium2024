@@ -173,12 +173,22 @@ startHi("hello hi") → false
 
     }
 
+    public static String doubleChar(String str) {
+        String s = "";
+        for (int i = 0; i < str.length(); i++ ){
+            s = s + str.charAt(i)  + str.charAt(i);
+        }
+        return s;
+    }
+
     public static void main(String[] args) {
 
-        System.out.println(delDel("adelHello"));
+        String a = "The";
+        System.out.println(doubleChar(a));
 
+        //System.out.println(delDel("adelHello"));
 //        String middleThree = "candy";
-        String abcd = "abcdefgh";
+        //String abcd = "abcdefgh";
 //        // System.out.println(middleThree(middleThree));
 //        StringBuilder sb = new StringBuilder(middleThree);
 //
