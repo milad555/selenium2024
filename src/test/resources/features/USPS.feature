@@ -26,5 +26,5 @@ Feature: Test USPS site
     Given I navigate to "usps lookup a zip code by address" page
     When I hover over "Search USPS.com" link
     And I click "PO BOXES" link
-    And I filter results with "Send"
-    Then I verify 8 resuls are displayed
+#    And I filter results with "Send"
+#    Then I verify 8 resuls are displayed

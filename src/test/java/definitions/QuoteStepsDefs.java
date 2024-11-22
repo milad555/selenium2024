@@ -59,7 +59,7 @@ public class QuoteStepsDefs {
             case "careers" -> page.open("https://skryabin-careers.herokuapp.com/");
             case "careers login" -> page.open("https://skryabin-careers.herokuapp.com/login");
             case "usps priority mail" -> priority.open();
-            case "sps lookup a zip code by address" -> lookupZip.open();
+            case "usps lookup a zip code by address" -> lookupZip.open();
             default -> throw new IllegalStateException("Unexpected value: " + page);
         }
     }
