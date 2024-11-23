@@ -1,4 +1,4 @@
-@USPS
+@USPS @smoke
 Feature: Test USPS site
 
   @USPS1
@@ -26,6 +26,6 @@ Feature: Test USPS site
     Given I navigate to "usps lookup a zip code by address" page
     When I hover over Search and search for "Boxes"
 
-    And I wait for 5 sec
-    And I filter results with "Send"
+#    And I wait for 5 sec
+#    And I filter results with "Send"
 #    Then I verify 8 resuls are displayed

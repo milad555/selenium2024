@@ -1,4 +1,4 @@
-@nopUsers
+@nopUsers @smoke
 Feature: User Registration and Login
   As a new user
   I want to be able to register and log in to the nopCommerce website
