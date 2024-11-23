@@ -24,7 +24,8 @@ Feature: Test USPS site
 
   Scenario: Validate Boxes count
     Given I navigate to "usps lookup a zip code by address" page
-    When I hover over "Search USPS.com" link
-    And I click "PO BOXES" link
-#    And I filter results with "Send"
+    When I hover over Search and search for "Boxes"
+
+    And I wait for 5 sec
+    And I filter results with "Send"
 #    Then I verify 8 resuls are displayed

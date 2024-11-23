@@ -16,6 +16,7 @@ import java.util.Random;
 
 public class Page {
 
+
     protected String url;
     protected String title;
     WebDriver driver;
@@ -38,6 +39,7 @@ public class Page {
         Select select = new Select(element);
         select.selectByVisibleText(text);
     }
+
 
     public WebElement getByXpath(String xpath) {
         return driver.findElement(By.xpath(xpath));
@@ -118,6 +120,7 @@ public class Page {
     public void hoverOver(WebElement element) {
         Actions actions = new Actions(driver);
         actions.moveToElement(element).perform();
+
     }
 
     //fillOuts

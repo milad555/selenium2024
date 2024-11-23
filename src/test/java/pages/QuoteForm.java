@@ -153,6 +153,7 @@ public class QuoteForm extends Page {
                 .build().perform();
     }
 
+
     public void acceptAgreement() {
         thirdPartyAgreement.click();
         driver.switchTo().alert().accept();
