@@ -20,6 +20,8 @@ import java.time.Duration;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class QuoteStepsDefs implements Loggable {
+
+    // just a test
     UserData data = new UserData(
             "Miladski",
             "Milad",
