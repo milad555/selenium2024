@@ -1,5 +1,7 @@
 package intPrep;
 
+import org.apache.logging.log4j.core.util.JsonUtils;
+
 import java.util.*;
 
 public class LeetCode {
@@ -87,20 +89,67 @@ Do not allocate extra space for another array. You must do this by modifying the
 
 
 // prime number
-        int finish = 30;
+        // int finish = 30;
         // System.out.println(prime(30));
-        // primeNumber(finish);
+        //   primeNumber(finish);
 
 //        String s = "VII";
 //        System.out.println(romanToInt(s));
-        String out = "<<>>";
-        String a = "candy";
-      //  System.out.println(middleThree(a));
+//        String out = "<<>>";
+//        String a = "candy";
+        //  System.out.println(middleThree(a));
 
-        System.out.println(makeOutWord(out,a));
+        // System.out.println(makeOutWord(out,a));
+//        String s = "A man, a plan, a canal: Panama";
+//        System.out.println( isPalindrome(s));
+
+//        String s = "ace";
+//        String t = "abcde";
+//
+//        String str1 = "ABABAB";
+//        String str2 = "ABAB";
+//        gcdOfStrings(str1, str2);
+//        int[] arr = {7, 5, 6, 8, 3};
+//        minAndMax(arr);
+
+//        String[] arr = {"easy", "does", "it", "every", "ice", "eaten"};
+//        allSwap(arr);
+        moveZeroes(new int[]{0, 0, 1});
     }
 
+    public boolean isSubsequence(String s, String t) {
 
+        int sPoint = 0;
+        int tPoint = 0;
+        while (sPoint < s.length() && tPoint < t.length()) {
+            if (s.charAt(sPoint) == t.charAt(tPoint)) {
+                sPoint++;
+            }
+            tPoint++;
+        }
+
+        return sPoint == s.length();
+
+    }
+
+    // valid palindrome
+    public static boolean isPalindrome(String s) {
+
+        s = s.replaceAll("[^a-zA-Z0-9]", "").toLowerCase();
+
+        if (s.length() == 0) {
+            return true;
+        }
+        int len = s.length() - 1;
+
+        for (int i = 0; i <= s.length() / 2; i++) {
+            if (s.charAt(i) != s.charAt(len)) {
+                return false;
+            }
+            len--;
+        }
+        return true;
+    }
 
 
     public static int[] twoSum(int[] nums, int target) {
@@ -332,13 +381,123 @@ Do not allocate extra space for another array. You must do this by modifying the
     public static String middleThree(String str) {
         int m = str.length() / 2;
 
-       return str.substring(m-1,m+2);
+        return str.substring(m - 1, m + 2);
     }
 
     public static String makeOutWord(String out, String word) {
-    String begin = out.substring(0,2);
-    String end = out.substring(2,4);
-    return begin+word+end;
+        String begin = out.substring(0, 2);
+        String end = out.substring(2, 4);
+        return begin + word + end;
     }
-//candy
+
+//1071. Greatest Common Divisor of Strings
+// For two strings s and t, we say "t divides s" if and only if s = t + t + t + ... + t + t
+// (i.e., t is concatenated with itself one or more times).
+//Given two strings str1 and str2, return the largest string x such that x divides both str1 and str2.
+
+    public static String gcdOfStrings(String str1, String str2) {
+        if ((str1 + str2).equals(str2 + str1)) return "";
+
+        int gcdLen = gcd(str1.length(), str2.length());
+
+        return str1.substring(0, gcdLen);
+
+    }
+
+    public static int gcd(int a, int b) {
+        while (b != 0) {
+            int rem = a % b;
+            a = b;
+            b = rem;
+        }
+        return a;
+    }
+// find a minimal and maximum number in the array
+
+    public static void minAndMax(int[] arr) {
+        int min = Integer.MAX_VALUE;
+        int max = Integer.MIN_VALUE;
+
+        for (int num : arr) {
+            if (num > max) {
+                max = num;
+            }
+            if (num < min) {
+                min = num;
+            }
+        }
+        System.out.println("Min val: " + min + " Max val: " + max);
+    }
+
+    public String wordAppend(String[] strings) {
+        String res = "";
+        Map<String, Integer> map = new HashMap<>();
+        for (int i = 0; i < strings.length - 1; i += 2) {
+            String a = strings[i];
+            if (a.equals(strings[i + 2])) {
+                res += a;
+            }
+
+        }
+        return res;
+    }
+
+    public Map<String, Boolean> wordMultiple(String[] strings) {
+        Map<String, Boolean> map = new HashMap<>();
+
+        for (String str : strings) {
+            if (!map.containsKey(str)) {
+                map.put(str, false);
+            } else {
+                map.put(str, true);
+            }
+        }
+        return map;
+    }
+
+
+    public static String[] allSwap(String[] strings) {
+        // a: 0
+        // b:1
+        // c:2
+        // String firstChar = strings[i].substring(0,1);
+        //if (!map.containsKey(strings[i])) => map.put(a, i)
+        //else int rep = map.get(strings[]) =
+
+        Map<String, Integer> map = new HashMap<>();
+
+        for(int i = 0; i < strings.length; i++){
+            String firstChar = strings[i].substring(0,1);
+            if(!map.containsKey(firstChar)){
+                map.put(firstChar, i);
+            } else{
+                String temp = strings[i];
+                strings[i] = strings[map.get(firstChar)];
+                strings[map.get(firstChar)] = temp;
+                map.remove(firstChar);
+            }
+        }
+        return strings;
+    }
+//283. Move Zeroes
+    public static void moveZeroes(int[] nums) {
+        int n = nums.length;
+        if (n <2){
+            return;
+        }
+        int L = 0;
+        int R = 1;
+        while ( R < n){
+            if(nums[L] != 0){
+                L++;
+                R++;
+            } else if(nums[R] == 0){
+                R++;
+            } else{
+                int temp = nums[R];
+                nums[R] = nums[L];
+                nums[L] = temp;
+            }
+        }
+    }
 }

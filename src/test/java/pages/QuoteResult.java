@@ -12,14 +12,18 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 public class QuoteResult extends Page {
 
-    QuoteForm quote = new QuoteForm();
+    // constructor
+    public QuoteResult() {
+        url = "https://skryabin.com/market/quote_result.html";
+        title = "Get a Quote";
+    }
 
     @FindBy(xpath = "//b[@name='currentTime']")
     private WebElement currentTime;
 
     public String submittedApplicationData(String element){
         String xpath = String.format("//b[@name='%s']", element);
-        return quote.getByXpath(xpath).getText();
+        return getByXpath(xpath).getText();
     }
 
     public void isSubmittedDataCorrect(String element, String expectedValue ){
@@ -27,6 +31,8 @@ public class QuoteResult extends Page {
     }
 
     public void isCurrentTimeCorrect (){
+//        System.out.println("Current time: " + currentTime.getText());
+//        System.out.println("Local time: " + getLocalTime());
         assertThat(currentTime.getText().equalsIgnoreCase(getLocalTime())).isTrue();
     }
 
@@ -36,6 +42,6 @@ public class QuoteResult extends Page {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("h:mm a");
         // Format the current time
         String formattedTime = now.format(formatter);
-        return formattedTime + " Pacific Daylight Time";
+        return formattedTime + " Pacific Standard Time";
     }
 }

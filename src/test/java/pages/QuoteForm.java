@@ -7,14 +7,16 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 import support.DriverFactory;
+import support.Loggable;
 
-public class QuoteForm extends Page {
+public class QuoteForm extends Page implements Loggable {
 
 
     //constructor
-//    public QuoteForm() {
-//
-//    }
+    public QuoteForm() {
+        url = "https://skryabin.com/market/quote.html";
+        title = "Get a Quote";
+    }
 
     WebDriver driver = DriverFactory.getDriver();
     Actions action = new Actions(driver);
@@ -70,14 +72,20 @@ public class QuoteForm extends Page {
     @FindBy(xpath = "//select[@name='countryOfOrigin']")
     private WebElement countryOfOrigin;
 
-    @FindBy (xpath = "//iframe[@name='additionalInfo']")
+    @FindBy(xpath = "//iframe[@name='additionalInfo']")
     private WebElement additionalInfoFrame;
 
-    @FindBy (xpath = "//input[@id='contactPersonName']")
+    @FindBy(xpath = "//input[@id='contactPersonName']")
     private WebElement contactPersonName;
 
-    @FindBy (xpath = "//input[@id='contactPersonPhone']")
+    @FindBy(xpath = "//input[@id='contactPersonPhone']")
     private WebElement contactPersonPhone;
+
+    // related documents block
+    @FindBy(xpath = "//button[contains(@onclick, 'new_window')]")
+    private WebElement relatedDocumentsButton;
+    @FindBy(xpath = "//ul")
+    private WebElement relatedDocumentsSection;
 
     private WebElement selectDay(String day) {
 
@@ -90,6 +98,7 @@ public class QuoteForm extends Page {
 
 
     public void fillName(String firstNameValue, String middleNameValue, String lastNameValue) {
+        logInfo("filling last and first name");
         name.click();
         firstName.sendKeys(firstNameValue);
         middleName.sendKeys(middleNameValue);
@@ -128,13 +137,16 @@ public class QuoteForm extends Page {
     public void fillEmail(String emailText) {
         email.sendKeys(emailText);
     }
+
     public void fillphone(String phoneText) {
         phone.sendKeys(phoneText);
     }
-    public WebElement checkGender(String yourGender) {
+
+    public void checkGender(String yourGender) {
         String gender = String.format("//input[@value='%s']", yourGender);
-        return getByXpath(gender);
+        getByXpath(gender).click();
     }
+
     public void selectTwoCarMakers(String car1, String car2) {
         action.keyDown(Keys.COMMAND)
                 .click(getByXpath("//option[@value='" + car1 + "']"))
@@ -142,20 +154,57 @@ public class QuoteForm extends Page {
                 .keyUp(Keys.COMMAND)             // Release the Command key
                 .build().perform();
     }
+
+
     public void acceptAgreement() {
         thirdPartyAgreement.click();
         driver.switchTo().alert().accept();
     }
+
     public void selectCountryOfOrigin(String country) {
         selectByVisibleText(countryOfOrigin, country);
     }
-    public void fillAdditionalInform(String name, String phone){
+
+    public void fillAdditionalInform(String name, String phone) {
         switchToIframe(additionalInfoFrame);
         contactPersonName.sendKeys(name);
         contactPersonPhone.sendKeys(phone);
         switchToDefaultContent();
     }
+    public boolean isRelatedDocumentPresent(String documentName) {
+        // save original handle to switch back later
+        String mainTabHandle = driver.getWindowHandle();
+        // click button to open new tab
+        relatedDocumentsButton.click();
+        // snippet to switch to new tab
+        driver.getWindowHandles().forEach(handle -> driver.switchTo().window(handle));
+        // verify content in the new tab
+        boolean isDocumentPresent = relatedDocumentsSection.getText().contains(documentName);
+        // switch back to original tab
+        driver.switchTo().window(mainTabHandle);
 
+        return isDocumentPresent;
+    }
 
+    public void closeTabAndRefocusMain(String originalWindowHandle) {
+        driver.close(); // Close the new tab
+        driver.switchTo().window(originalWindowHandle); // Switch back to the main window
+    }
+
+    public boolean isRelatedDocumentPresentExample2(String documentName) {
+        // save original handle to switch back later
+        String mainTabHandle = driver.getWindowHandle();
+        // click button to open new tab
+        relatedDocumentsButton.click();
+        // ANOTHER snippet to switch to new tab
+        String[] handles = driver.getWindowHandles().toArray(new String[0]);
+        int lastTabIndex = handles.length - 1;
+        driver.switchTo().window(handles[lastTabIndex]);
+        // verify content in the new tab
+        boolean isDocumentPresent = relatedDocumentsSection.getText().contains(documentName);
+        // switch back to original tab
+        driver.switchTo().window(mainTabHandle);
+        return isDocumentPresent;
+    }
 
 }

@@ -1,10 +1,6 @@
 package intPrep;
 
-import javax.xml.transform.Source;
-import java.sql.SQLOutput;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
+
 import java.util.List;
 
 public class Ints {
@@ -57,12 +53,31 @@ Example:
         }
     }
 
+    public boolean lastDigit(int a, int b) {
+        int remA = a%10;
+        int remB = b%10;
+        return remB == remA;
+    }
 
+    public static void staircase(int n) {
+
+        String p = "#";
+        StringBuilder builder = new StringBuilder(p);
+        for (int i = 1; i<=n; i++){
+            for (int j = 1; j <=n-i ; j++) {
+                System.out.print(" ");
+            }
+            for (int k = 1; k <=i ; k++) {
+                System.out.print("#");
+            }
+            System.out.println();
+        }
+    }
 
     public static void main(String[] args) {
         //  gradeConverter(79);
         //System.out.println(maxNum(300,800,799));
-
+        staircase(6);
 
     }
 }

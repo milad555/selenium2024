@@ -11,7 +11,6 @@ public class TrelloStepDefs {
 
     private String yamlFile = "apiData";
     private final static String URL = "https://api.trello.com/";
-    private final static String publicBoardId = "671c181bda301fbdd8f7524d";
     private final static String key = "c89d501e8951741b06e55ccdf74bd7fb";
     private final static String token = "ATTAd4b9dc75cf4b8d05b08008ee42d853a6de6e4947c81cc8d200e06d771ad1237aAAA42F18";
     private static String boardId;

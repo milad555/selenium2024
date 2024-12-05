@@ -1,5 +1,8 @@
 package ClassWork;
 
+import java.util.Collection;
+import java.util.HashMap;
+
 public class Alcohol extends Food {
 
     private int drinks;
@@ -18,6 +21,7 @@ public class Alcohol extends Food {
         this.drinks = drinks;
         super.source = source;
     }
+
 
     public void buzzLevel() {
         if (drinks <= 1) {

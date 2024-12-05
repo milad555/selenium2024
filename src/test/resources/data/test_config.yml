@@ -1,6 +1,6 @@
-testExecutionMode: jenkins
+testExecutionMode: local
 browser: chrome
-headless: true
+headless: false
 windowWidth: 1920
 windowHeight: 1080
 pageLoadTimeout: 60

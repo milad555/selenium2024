@@ -7,6 +7,7 @@ import java.io.*;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Map;
+import java.util.Properties;
 import java.util.concurrent.ConcurrentHashMap;
 
 public class TestDataManager {
@@ -27,10 +28,11 @@ public class TestDataManager {
     public static void clearAllTestData() {
         testData.clear();
     }
-
     public static String getTimestamp() {
         return timestampThreadLocal.get();
     }
+    public static String headlessProperty = System.getProperty("headless");
+    public static String testExecutionMode = System.getProperty("testExecutionMode");
 
     public static void updateTimestamp() {
         timestampThreadLocal.set(LocalDateTime.now().format(formatter));
@@ -42,6 +44,14 @@ public class TestDataManager {
                 String path = System.getProperty("user.dir") + "/src/test/resources/data/test_config.yml";
                 InputStream stream = new FileInputStream(path);
                 TestConfig testConfig = new Yaml().loadAs(stream, TestConfig.class);
+                //used to run in headless thru -Dheadless command
+                if (headlessProperty != null) {
+                    testConfig.setHeadless(Boolean.parseBoolean(headlessProperty));
+                }
+                //
+                if(testExecutionMode != null){
+                    testConfig.setTestExecutionMode(testExecutionMode);
+                }
                 configThreadLocal.set(testConfig);
             } catch (FileNotFoundException e) {
                 throw new Error(e);
@@ -85,5 +95,18 @@ public class TestDataManager {
         } catch (IOException e) {
             throw new Error(e);
         }
+    }
+
+    public static Properties getPropertiesFromFile(String fileName) {
+        String path = System.getProperty("user.dir") + "/src/test/resources/" + fileName + ".properties";
+        Properties properties = new Properties();
+        try (InputStream input = new FileInputStream(path)) {
+            properties.load(input);
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException("File not found: " + path, e);
+        } catch (IOException e) {
+            throw new RuntimeException("Error reading the file: " + path, e);
+        }
+        return properties;
     }
 }

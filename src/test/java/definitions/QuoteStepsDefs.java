@@ -10,17 +10,16 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
-import pages.Page;
-import pages.QuoteForm;
-import pages.QuoteResult;
-import pages.UserData;
+import pages.*;
 import support.DriverFactory;
+import support.Loggable;
+import testDataClasses.UserData;
 
 import java.time.Duration;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class QuoteStepsDefs {
+public class QuoteStepsDefs implements Loggable {
     UserData data = new UserData(
             "Miladski",
             "Milad",
@@ -28,13 +27,20 @@ public class QuoteStepsDefs {
             "K",
             "Mila123",
             "Mila123",
-            "test@test.com","Russia"
+            "test@test.com","Russia",
+            "Las Palmas",
+            "Irvine",
+            "CA",
+            "92620"
     );
 
     Page page = new Page();
     WebDriver driver = DriverFactory.getDriver();
     QuoteForm quoteForm = new QuoteForm();
     QuoteResult quoteResult = new QuoteResult();
+    USPSPriority priority = new USPSPriority();
+    USPSLookupZip lookupZip = new USPSLookupZip();
+    UPSCreateShipment upsCreateShipment = new UPSCreateShipment();
 
     public void click(String xpath) {
         driver.findElement(By.xpath(xpath)).click();
@@ -47,6 +53,7 @@ public class QuoteStepsDefs {
 
     public void fillOutField(String xpath, String value) {
         driver.findElement(By.xpath(xpath)).sendKeys(value);
+
     }
 
     @Given("I navigate to {string} page")
@@ -57,6 +64,9 @@ public class QuoteStepsDefs {
             case "login" -> page.open("https://skryabin.com/market/login.html");
             case "careers" -> page.open("https://skryabin-careers.herokuapp.com/");
             case "careers login" -> page.open("https://skryabin-careers.herokuapp.com/login");
+            case "usps priority mail" -> priority.open();
+            case "usps lookup a zip code by address" -> lookupZip.open();
+            case "ups shipment info" -> upsCreateShipment.open();
             default -> throw new IllegalStateException("Unexpected value: " + page);
         }
     }
@@ -99,7 +109,7 @@ public class QuoteStepsDefs {
     public void iVerifyThePageTitleIs(String title) {
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(5));
         wait.until(ExpectedConditions.titleIs(title));
-
+        System.out.println("Current page title is " + driver.getTitle());
     }
 
     @And("I submit the form")
@@ -130,13 +140,14 @@ public class QuoteStepsDefs {
         quoteForm.checkPrivacyPolicy();
         quoteForm.selectTwoCarMakers("Ford","Toyota");
         quoteForm.acceptAgreement();
-        quoteForm.checkGender("male").click();
+        quoteForm.checkGender("male");
         quoteForm.selectDateOfBirth("1991","Jan", "4");
         quoteForm.selectCountryOfOrigin(data.getCountry());
         quoteForm.fillAdditionalInform("Donald Duck","1231412");
-       // quoteForm.clickButtonByContains("Related documents");
-        //quoteForm.switchToWindow(1);
-        //quoteForm.waitFor(5);
+        quoteForm.clickButtonByContains("Related documents");
+        quoteForm.switchToWindow(1);
+        assertThat(driver.findElement(By.xpath("//body")).getText()).contains("Document 1");
+        quoteForm.switchToWindow(0);
     }
 
     @And("I submit the form oop")

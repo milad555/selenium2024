@@ -7,7 +7,7 @@ public class UserData {
     private String last_name;
     private String avatar;
 
-    //Constructors, must have a default constructor to work with Jackson
+    //Constructors: must have a default constructor to work with Jackson
     public UserData() {}
     public UserData(Integer id, String email, String first_name, String last_name, String avatar) {
         this.id = id;

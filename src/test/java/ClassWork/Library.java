@@ -38,5 +38,7 @@ public class Library {
       //  System.out.println(lib.displayLibrary());
         DiaryOfWimpyKid diary = new DiaryOfWimpyKid("aa", "bb", 12);
         System.out.println(diary.getTitle());
+        Alcohol alcohol = new Alcohol(2,3,"d");
+
     }
 }

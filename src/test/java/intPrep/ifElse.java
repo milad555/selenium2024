@@ -80,13 +80,135 @@ Example:
     loneTeen(13, 13) → false
      */
     public boolean loneTeen(int a, int b) {
-       boolean aTeen = (a >= 13 && a <= 19);
-       boolean bTeen = (b >= 13 && b <= 19);
-       return (aTeen && !bTeen) || (!aTeen && bTeen);
+        boolean aTeen = (a >= 13 && a <= 19);
+        boolean bTeen = (b >= 13 && b <= 19);
+        return (aTeen && !bTeen) || (!aTeen && bTeen);
+    }
+
+    public boolean mixStart(String str) {
+        if (str.substring(1, 3).equals("ix")) {
+            return true;
+        }
+        return false;
+    }
+
+    public String startOz(String str) {
+        String result = "";
+
+        if (str.length() >= 1 && str.charAt(0) == 'o') {
+            result = result + str.charAt(0);
+        }
+
+        if (str.length() >= 2 && str.charAt(1) == 'z') {
+            result = result + str.charAt(1);
+        }
+
+        return result;
+    }
+
+    public static int close10(int a, int b) {
+        int difA = Math.abs(10 - a);
+        int difB = Math.abs(10 - b);
+
+        if (difA < difB) {
+            return a;
+        }
+        if (difA > difB) {
+            return b;
+        }
+        return 0;
+    }
+
+    public static int max1020(int a, int b) {
+
+        if (b > a) {
+            int temp = a;
+            a = b;
+            b = temp;
+        }
+        if (a >= 10 && a <= 20) return a;
+        if (b >= 10 && b <= 20) return b;
+        return 0;
+    }
+
+    public static boolean has12(int[] nums) {
+        if (nums.length <= 1) {
+            return false;
+        }
+
+        if (nums.length <= 1) {
+            return false;
+        }
+
+        boolean hasOne = false;
+
+        for (int num : nums) {
+
+            if (num == 1) {
+                hasOne = true;
+            }
+            if (hasOne && num == 2) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    public static boolean modThree(int[] nums) {
+        int count = 0;
+        boolean isEven = false;
+        boolean prevEven = false;
+        int mod = 0;
+
+        for (int i = 0; i < nums.length; i++) {
+            prevEven = isEven;
+            if (nums[i] % 2 == 0) {
+                isEven = true;
+            } else {
+                isEven = false;
+            }
+            if (isEven) {
+                if (prevEven) {
+                    count++;
+                } else {
+                    count = 1;
+                }
+            } else if (!isEven) {
+                if (!prevEven) {
+                    count++;
+                } else {
+                    count = 1;
+                }
+            }
+            if (count == 3) {
+                mod++;
+            }
+        }
+        return mod >= 1;
+    }
+
+    public static boolean haveThree(int[] nums) {
+        boolean have3 = false;
+        for (int i= 0; i < nums.length - 4; i++){
+            if (nums[i] == 3 && nums[i+2] == 3 && nums[i+4] == 3){
+                have3 =  true;
+                break;
+            }else{
+                have3 =  false;
+            }
+
+        }
+        return have3;
     }
 
 
     public static void main(String[] args) {
-        isLeap(1900);
+        int[] arr = {1, 3, 1, 3, 1, 3, 4, 3};
+
+        //has12(arr);
+        System.out.println(haveThree(arr));
+
+
     }
 }

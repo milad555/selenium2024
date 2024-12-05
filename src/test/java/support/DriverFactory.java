@@ -1,6 +1,7 @@
 // Created by Viacheslav (Slava) Skryabin 04/01/2011
 package support;
 
+import io.appium.java_client.android.AndroidDriver;
 import org.openqa.selenium.Dimension;
 import org.openqa.selenium.Platform;
 import org.openqa.selenium.Point;
@@ -19,10 +20,13 @@ import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.safari.SafariDriver;
 
 import java.net.MalformedURLException;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Properties;
 
 public class DriverFactory {
 
@@ -108,7 +112,6 @@ public class DriverFactory {
                 chromePreferences.put("download.default_directory", System.getProperty("user.dir") + "/src/test/resources/downloads");
                 chromePreferences.put("safebrowsing.enabled", false);
                 chromePreferences.put("plugins.always_open_pdf_externally", true);
-
                 chromePreferences.put("plugins.plugins_disabled", new ArrayList<String>() {{
                     add("Chrome PDF Viewer");
                 }});
@@ -129,11 +132,33 @@ public class DriverFactory {
                 chromeOptions.addArguments("--no-sandbox"); // Bypass OS security model
                 chromeOptions.addArguments("--disable-dev-shm-usage");
                 ChromeDriverService service = new ChromeDriverService.Builder()
-                        .withLogOutput(System.out)
+                       .withLogOutput(System.out)
                         .build();
                 driverThreadLocal.set(new ChromeDriver(service, chromeOptions));
+            }
 
-            } else {
+            else if (testConfig.getTestExecutionMode().equals("android")) {
+                Properties property = TestDataManager.getPropertiesFromFile("android");
+                DesiredCapabilities capabilities = new DesiredCapabilities();
+                String appRelativePath = property.getProperty("app");
+                String app = System.getProperty("user.dir") + appRelativePath;
+
+                capabilities.setCapability("platformName", property.getProperty("platformName"));
+                capabilities.setCapability("automationName", property.getProperty("automationName"));
+                capabilities.setCapability("deviceName", property.getProperty("deviceName"));
+                capabilities.setCapability("appPackage", property.getProperty("appPackage"));
+                capabilities.setCapability("appActivity", property.getProperty("appActivity"));
+                capabilities.setCapability("app", app);
+                capabilities.setCapability("autoGrantPermissions", true);
+                capabilities.setCapability("autoAcceptAlerts", true);
+
+                try {
+                    driverThreadLocal.set(new AndroidDriver(new URI("http://localhost:4723/").toURL(), capabilities));
+                } catch (MalformedURLException | URISyntaxException e) {
+                    throw new RuntimeException(e);
+                }
+
+            }else {
                 throw new RuntimeException("Unsupported test environment: " + testConfig.getTestExecutionMode());
             }
         }
