@@ -1,4 +1,4 @@
-@nop
+@nop @smoke
 Feature: Category and Sidebar Navigation
   As a new user
   I want to navigate through the categories and sidebar items

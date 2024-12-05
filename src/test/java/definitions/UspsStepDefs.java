@@ -48,4 +48,10 @@ public class UspsStepDefs {
     public void iClickByText(String text) {
         zip.clickByText(text);
     }
+
+
+    @When("I hover over Search and search for {string}")
+    public void iHoverOverSearchAndSearchFor(String text) {
+        zip.hoverAndSearch(text);
+    }
 }

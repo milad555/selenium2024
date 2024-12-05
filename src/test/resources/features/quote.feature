@@ -1,4 +1,4 @@
-@quote
+@quote @smoke
 Feature: Quote project
 
   @quote1

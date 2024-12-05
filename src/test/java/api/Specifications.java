@@ -32,9 +32,10 @@ public class Specifications {
                 .build();
     }
 
+
+
     public static void installSpecification(RequestSpecification requestSpec, ResponseSpecification responseSpec){
         RestAssured.requestSpecification = requestSpec;
         RestAssured.responseSpecification = responseSpec;
-
     }
 }

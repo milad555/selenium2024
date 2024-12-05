@@ -180,11 +180,23 @@ startHi("hello hi") → false
         }
         return s;
     }
+    public static boolean hasBad(String str) {
+        if(str.length()< 3){
+            return false;
+        }
+
+        if(str.substring(0,3).contains("bad") || str.substring(1,4).contains("bad") && str.length()< 3){
+            return true;
+        }
+
+        return false;
+    }
 
     public static void main(String[] args) {
 
-        String a = "The";
-        System.out.println(doubleChar(a));
+        String a = "xba";
+        hasBad(a);
+        //System.out.println(doubleChar(a));
 
         //System.out.println(delDel("adelHello"));
 //        String middleThree = "candy";

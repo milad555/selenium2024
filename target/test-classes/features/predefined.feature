@@ -1,4 +1,4 @@
-@predefined
+@predefined @smoke
 Feature: Predefined steps
 
   @predefined1
