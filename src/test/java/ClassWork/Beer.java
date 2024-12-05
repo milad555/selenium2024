@@ -6,7 +6,9 @@ public class Beer extends Alcohol {
         super(drinks, hangoverIndex, source);
     }
 
-
-
+    @Override
+    public int getCalories() {
+        return super.getCalories();
+    }
 }
 

@@ -12,13 +12,14 @@ import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import pages.*;
 import support.DriverFactory;
+import support.Loggable;
 import testDataClasses.UserData;
 
 import java.time.Duration;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class QuoteStepsDefs {
+public class QuoteStepsDefs implements Loggable {
     UserData data = new UserData(
             "Miladski",
             "Milad",
@@ -26,7 +27,11 @@ public class QuoteStepsDefs {
             "K",
             "Mila123",
             "Mila123",
-            "test@test.com","Russia"
+            "test@test.com","Russia",
+            "Las Palmas",
+            "Irvine",
+            "CA",
+            "92620"
     );
 
     Page page = new Page();
@@ -35,6 +40,7 @@ public class QuoteStepsDefs {
     QuoteResult quoteResult = new QuoteResult();
     USPSPriority priority = new USPSPriority();
     USPSLookupZip lookupZip = new USPSLookupZip();
+    UPSCreateShipment upsCreateShipment = new UPSCreateShipment();
 
     public void click(String xpath) {
         driver.findElement(By.xpath(xpath)).click();
@@ -60,6 +66,7 @@ public class QuoteStepsDefs {
             case "careers login" -> page.open("https://skryabin-careers.herokuapp.com/login");
             case "usps priority mail" -> priority.open();
             case "usps lookup a zip code by address" -> lookupZip.open();
+            case "ups shipment info" -> upsCreateShipment.open();
             default -> throw new IllegalStateException("Unexpected value: " + page);
         }
     }

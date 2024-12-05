@@ -6,11 +6,11 @@ import io.cucumber.java.Scenario;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 
-public class Hooks {
+public class Hooks implements Loggable {
 
     @Before(order = 0)
     public void scenarioStart() {
-
+    logDebug("");
     }
 
     @After(order = 0)

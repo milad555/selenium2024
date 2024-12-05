@@ -8,6 +8,7 @@ ClassWork/Alcohol.class
 api/Register.class
 ClassWork/CoffeeMachine.class
 pages/MobPage.class
+support/RunCucumberTest.class
 pages/CareerLogin.class
 support/DriverFactory.class
 udemiApi/DynamicJson.class

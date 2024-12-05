@@ -30,6 +30,7 @@ Example:
     public static void evenOrOdd(int number) {
         System.out.println("Is number " + number + " even ? " + (number % 2 == 0));
         // or: return number%2==0
+
     }
 
 // Foo-Bar: if num is divisible by 3 - print foo
@@ -212,6 +213,18 @@ Example:
         return Integer.parseInt(z);
     }
 
+    //Reverse an Integer using do/while loop
+    public static int reverseInteger2(int num) {
+        int reversed = 0;
+        do {
+            int digit = num % 10; // get the last digit
+            reversed = reversed * 10 + digit; // add the last digit to the reversed number
+            num = num / 10; // remove the last digit
+        } while (num != 0);
+        return reversed;
+    }
+
+    //Create a program that calculates the sum of all digits of a given integer until the sum is a single digit.
     public static String sumOfDigits(int integer) {
         String ints = integer + "";
         int z = 0;
@@ -224,13 +237,22 @@ Example:
         }
         return ints;
     }
+//Create a program that calculates the sum of all digits of a given integer until the sum is a single digit. Second solution
 
-    public static boolean isAnagram(String a, String b) {
-        if (a.length() != b.length()) {
-            return false;
+    public static int sumOfDigits2(int num) {
+        if (num < 10) {
+            return num;
         }
-
-        return false;
+        do {
+            int res = 0;
+            while (num != 0) {
+                int d = num % 10;
+                res += d;
+                num /= 10;
+            }
+            num = res;
+        } while (num > 9);
+        return num;
     }
 
 
@@ -312,10 +334,152 @@ Example:
         return res;
     }
 
+    public static void bubbleSort(int[] arr) {
+        int temp;
+        for (int i = 0; i < arr.length; i++) {
+            for (int j = 1; j < arr.length; j++) {
+                if (arr[j - 1] > arr[j]) {
+                    temp = arr[j];
+                    arr[j] = arr[j - 1];
+                    arr[j - 1] = temp;
+                }
+            }
+        }
+        for (int k : arr) {
+            System.out.println(k);
+        }
+
+    }
+
+    //2. Find Two Elements that Add Up to a Target Sum
+
+    public static void twoElToTarget(int[] arr, int target) {
+        for (int i = 0; i < arr.length; i++) {
+            for (int j = 1; j < arr.length; j++) {
+                if (arr[i] + arr[j] == target) {
+                    System.out.println(arr[i] + " + " + arr[j] + " = " + target);
+                }
+            }
+        }
+    }
+
+    public static boolean isAnagram(String a, String b) {
+        //must be same length
+        // must be lower case
+        // remove spaces
+        // check if strings are null
+        if (a.length() != b.length()) {
+            return false;
+        }
+        a = a.replaceAll(" ", "").toLowerCase();
+        b = b.replaceAll(" ", "").toLowerCase();
+
+
+        Map<Character, Integer> aMap = new HashMap<>();
+        Map<Character, Integer> bMap = new HashMap<>();
+        for (int i = 0; i < a.length(); i++) {
+            aMap.put(a.charAt(i), aMap.getOrDefault(a.charAt(i), 0) + 1);
+            bMap.put(b.charAt(i), bMap.getOrDefault(b.charAt(i), 0) + 1);
+        }
+        return aMap.equals(bMap);
+    }
+
+    public static void fibonachi2(int n) {
+        int temp;
+        int n1 = 0;
+        int n2 = 1;
+        int n3;
+
+        for (int i = 0; i < n; i++) {
+            n3 = n1 + n2;
+            n1 = n2;
+            n2 = n3;
+            System.out.println(n3);
+        }
+    }
+
+    public static void primeN(int n) {
+
+        List<Integer> primes = new ArrayList<>();
+        for (int numberToCheck = 2; numberToCheck <= n; numberToCheck++) {
+            boolean isPrime = true;
+            for (int factor = 2; factor <= numberToCheck / 2; factor++) {
+                if (numberToCheck % factor == 0) {
+                    isPrime = false;
+                    break;
+                }
+            }
+            if (isPrime) {
+                primes.add(numberToCheck);
+            }
+
+        }
+        System.out.println(primes);
+    }
+
+
+    /*
+    public static List<Integer> primeNumbers(int n) {
+        List<Integer> primes = new LinkedList<>();
+        for (int numberToCheck = 1; numberToCheck <= n; numberToCheck++) {
+            boolean isPrime = true;
+            for (int factor = 2; factor <= numberToCheck / 2; factor++) {
+                if (numberToCheck % factor == 0) {
+                    isPrime = false;
+                    break;
+                }
+            }
+            if (isPrime) {
+                primes.add(numberToCheck);
+            }
+        }
+        return primes;
+    }
+     */
+    /*
+    There are n kids with candies. You are given an integer array candies, where each candies[i]
+    represents the number of candies the ith kid has,
+    and an integer extraCandies, denoting the number of extra candies that you have.
+Return a boolean array result of length n, where result[i] is true if, after giving the ith kid all the extraCandies,
+they will have the greatest number of candies among all the kids, or false otherwise.
+Note that multiple kids can have the greatest number of candies.
+     */
+
+    public static List<Boolean> kidsWithCandies(int[] candies, int extraCandies) {
+         /*
+        3
+        [1,2,4,6,7]
+        [false,false,false,true,true]
+        find a greatest number of candies
+        loop thru the array again and compare if the candy+extraCandy is more than greatest number
+        */
+        List<Boolean> result = new ArrayList<>();
+        int arrLen = candies.length;
+        int greatNumCandy = 0;
+        for (int i = 0; i < arrLen; i++) {
+            if (greatNumCandy < candies[i]) {
+                greatNumCandy = candies[i];
+            }
+        }
+        for (int candy : candies) {
+            if (candy + extraCandies >= greatNumCandy) {
+                result.add(true);
+            } else {
+                result.add(false);
+            }
+        }
+        return result;
+    }
 
     public static void main(String[] args) {
-        // System.out.println(sumOfDigits(555));
+        String anagram1 = "The eyes";
+        String anagram2 = "They see";
 
+
+        primeN(100);
+        // System.out.println(isAnagram(anagram1, anagram2));
+        //fibonachi2(9);
+        // System.out.println(sumOfDigits(555));
         //evenOrOdd(3);
         // fooBar(1);
         //  System.out.println(reverseInteger(1234));
@@ -328,25 +492,9 @@ Example:
         //   fibonachi(15);
 
         int[] arr = {1, 2, 3, 7, 2, 7, 5};
-        System.out.println(Arrays.toString(arr));
-//        HashMap<Integer,Integer> map = new HashMap<>();
-        //  System.out.println(Arrays.toString(bubble(arr)));
-//        for (int i = 0; i < arr.length; i++) {
-//            map.put(arr[i], map.getOrDefault(arr[i],0) +1);
-//        }
-//        List<Integer> mapValues = map.entrySet().stream().filter(entry -> entry.getValue() == 2).map(Map.Entry::getKey).toList();
-//        System.out.println(mapValues);
+        int[] arr2 = {1, 2, 3, 4, 5};
+        int target = 6;
 
 
-//
-//        for (int i = 0; i < arr.length; i++) {
-//            int n = arr[i];
-//            for (int j = i + 1; j < arr.length; j++) {
-//                if (arr[i] == arr[j]) {
-//                    System.out.println(n);
-//                    break;
-//                }
-//            }
-//        }
     }
 }

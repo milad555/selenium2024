@@ -7,8 +7,9 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 import support.DriverFactory;
+import support.Loggable;
 
-public class QuoteForm extends Page {
+public class QuoteForm extends Page implements Loggable {
 
 
     //constructor
@@ -97,6 +98,7 @@ public class QuoteForm extends Page {
 
 
     public void fillName(String firstNameValue, String middleNameValue, String lastNameValue) {
+        logInfo("filling last and first name");
         name.click();
         firstName.sendKeys(firstNameValue);
         middleName.sendKeys(middleNameValue);

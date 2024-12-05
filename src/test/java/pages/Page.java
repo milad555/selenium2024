@@ -1,7 +1,9 @@
 package pages;
 
 import io.appium.java_client.android.AndroidDriver;
+import io.cucumber.java.en_old.Ac;
 import org.openqa.selenium.By;
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
@@ -45,9 +47,15 @@ public class Page {
         return driver.findElement(By.xpath(xpath));
     }
 
+
     //clicks
     public void clickButton(String button) {
-        getByXpath("//button[text()='" + button + "']").click();
+        try {
+            getByXpath("//button[text()='" + button + "']").click();
+        } catch (NoSuchElementException e) {
+            System.out.println("Primary button not found, trying fallback XPath...");
+            getByXpath("//button[normalize-space(text())='" + button + "']").click();
+        }
     }
     public void clickButtonByContains(String button) {
         getByXpath("//button[contains(text(),'" + button + "')]").click();
@@ -58,6 +66,11 @@ public class Page {
     }
     public void clickByText(String text) {
         elementByText(text).click();
+    }
+
+    public void clickWebElement(WebElement element){
+        waitForClickable(element);
+        element.click();
     }
 
     //elements
@@ -84,7 +97,9 @@ public class Page {
         Object[] windowHandles = driver.getWindowHandles().toArray();
         driver.switchTo().window((String) windowHandles[winNum]);
     }
-
+    public void test(){
+        System.out.println("test");
+    }
 
     public String randomString(int numOfLetters) {
         String characters = "abcdefghijklmnopqrstuvwxyz";

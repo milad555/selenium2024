@@ -18,6 +18,7 @@ public class BookTest {
 //        pride.displayBook();
 //        pride.rateBook();
 
+
         DiaryOfWimpyKid diary = new DiaryOfWimpyKid("Diary of Wimpy Kid", "Jeff Kinney ", 350);
         diary.readBook(diary.getFilePath());
 
